@@ -1,0 +1,8 @@
+dist/
+bin/
+reports/
+target/
+.settings
+.classpath
+.project
+*.jar
