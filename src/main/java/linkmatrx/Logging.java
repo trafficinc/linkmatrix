@@ -8,7 +8,6 @@ public class Logging {
 	private static Logger LOGGER; 
 	
 	Logging(String classname) {
-		// classname  = LinkMatrix.class.getName()
 		Logging.setLOGGER(Logger.getLogger(classname)); 
 		
 		// Logger setup

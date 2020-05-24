@@ -6,12 +6,6 @@ import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
-/*
- * -d = depth, -u = site url 
- * -m url -u https://www.site.com -o csv  -d 1
- * java -jar linkmatrix.jar -m url -u https://www.site.com -o console  -d 1
- * */
-
 public class InputControl {
 	
 	private static int crawlDepth = 1;
@@ -20,7 +14,6 @@ public class InputControl {
 	private static ArrayList<String> pagesthatneedtobevisited = new ArrayList<String>();
 	private static ArrayList<String> pagevisited = new ArrayList<String>();
 	private static String baseDomain;
-	//private static String fullUrl;
 	private static ToCsvW csv;
 	private static int generateCSV = 0; // 0 = no, 1 = yes
 
@@ -37,26 +30,6 @@ public class InputControl {
 		}
 		setBaseDomain(urlTest.getHost());
 		
-		//fullUrl = urlTest.getProtocol() + "://" + urlTest.getHost();
-		
-//		boolean respectRobotsTxt = false; // todo
-//		
-//		if (respectRobotsTxt) {
-//			boolean robotsFileExists = false;
-//			try {
-//				robotsFileExists = checkRobotsFile(fullUrl);
-//				if (robotsFileExists) {
-//					// then read file and add urls to not scan
-//				}
-//			} catch (IOException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-		//System.out.println(robotsFile);
-		//System.out.println(fullUrl);
-		//System.exit(0);
-		
 		if (InputControl.getGenerateCSV() == 1){
 			ToCsvW tocsv = new ToCsvW(InputControl.baseDomain);
 	 		tocsv.initcsv();
@@ -68,66 +41,12 @@ public class InputControl {
 
 	}
 
-	// todo
-//	private boolean checkRobotsFile(String fullUrl2) throws IOException {
-//		URL url;
-//		try {
-//			HttpURLConnection.setFollowRedirects(false);
-//			HttpURLConnection con = (HttpURLConnection) new URL(fullUrl2 + "/robots.txt").openConnection();
-//			con.setRequestMethod("HEAD");
-//			//System.out.println(con.getURL());
-//		    if (con.getResponseCode() == HttpURLConnection.HTTP_OK) {
-//		    	return true;
-//		    } else {
-//		    	return false;
-//		    }
-//		} catch (MalformedURLException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//	    return false;
-//		
-//	}
-
 	public void urlCrawl(String startUrl) {
-		
-//		CrawlReturnData page = startCrawl(startUrl);
-		//############### DATA #########################
-//		System.out.println("PAGE DATA");
-//		System.out.println(page.getsinglePageData());
-//		System.out.println("CSS");
-//		System.out.println(page.getSinglePageCssData().get("css"));
-//		System.out.println("LINKS");
-//		System.out.println(page.getSinglePageLinksData().get("links"));
 		boolean badURL = false;
 		// filters for returned pages
 		if ( InputControl.doFilters(startUrl) ) {
-			//System.out.println("Bad URL");
 			badURL = true;
-			// remove pages
-			//InputControl.removeFrompagesthatneedtobevisited(startUrl);
-			//InputControl.setPagevisited(startUrl);
-			
-//			if (!InputControl.getPagesthatneedtobevisited().isEmpty()) {
-////				System.out.println("InputControl.getPagesthatneedtobevisited().get(0)");
-////				System.out.println(InputControl.getPagesthatneedtobevisited().size());
-////				System.out.println(InputControl.getPagesthatneedtobevisited().get(0));
-//				urlCrawl(InputControl.getPagesthatneedtobevisited().get(0));
-//			} else {
-//				if (InputControl.getGenerateCSV() == 1){
-//					ToCsvW csv = InputControl.getCsv();
-//					csv.towritefile();
-//				}
-//				//System.out.println("Done! #1");
-//				System.out.println("Done!");
-//				System.exit(0);
-//			}
-			//System.out.println("Done! #1");
-			//return;
 		}
-		
-		//System.out.println(badURL);
-		
 			
 		CrawlReturnData page = startCrawl(startUrl);
 		
@@ -157,29 +76,15 @@ public class InputControl {
 			if (crawlCount > InputControl.getcrawlDepth()) {
 				//System.out.println("now should stop");
 			} else {
-				//System.out.println("run...");
 				InputControl.setPagesthatneedtobevisitedClean(page.getlinksOnPage());
 			}
-		
-//			InputControl.setPagesthatneedtobevisitedClean(page.getlinksOnPage());
-			
-//			System.out.println(InputControl.getPagesthatneedtobevisited());
-//			System.out.println(InputControl.getPagesthatneedtobevisited().size());
 			
 			// remove pages
 			InputControl.removeFrompagesthatneedtobevisited(startUrl);
 			InputControl.setPagevisited(startUrl);
 			
 			if (!InputControl.getPagesthatneedtobevisited().isEmpty()) {
-//				System.out.println("not empty yet...");
-				
-				
-				//System.out.println(startUrl);
-//				System.out.println(InputControl.getPagesthatneedtobevisited());
-//				System.out.println(InputControl.getPagesthatneedtobevisited().size());
-//				System.out.println(InputControl.getPagesthatneedtobevisited().get(0));
 				urlCrawl(InputControl.getPagesthatneedtobevisited().get(0));
-				//System.exit(0);
 			} else {
 				if (InputControl.getGenerateCSV() == 1){
 					ToCsvW csv = InputControl.getCsv();
@@ -188,11 +93,8 @@ public class InputControl {
 				System.out.println("Done!");
 				System.exit(0);
 			}
-			
-		
-				
+
 	}
-	
 
 	private static boolean doFilters(String startUrl) {
 		// filter by extension
@@ -200,7 +102,6 @@ public class InputControl {
 		if (startUrl.length() > 3) {
 			getExt = startUrl.substring(startUrl.length() - 3);
 		} else {
-		  // whatever is appropriate in this case
 		  throw new IllegalArgumentException("word has less than 3 characters!");
 		}
 		
@@ -217,8 +118,6 @@ public class InputControl {
 		} else {
 			return false;
 		}
-//		System.out.println(skipTrack);
-//		return false;
 		
 	}
 
@@ -226,44 +125,20 @@ public class InputControl {
 		 InputControl.pagesthatneedtobevisited.remove(url);
 	}
 
-	
 	public CrawlReturnData startCrawl(String startUrl) {
 		if (!startUrl.isEmpty()) {
-			
-			//Random rnd = new Random();
+
 			try {
 				TimeUnit.MILLISECONDS.sleep(100);
-				
 				CrawlThread cthread = new CrawlThread(startUrl, getBaseDomain());
 				Thread t1 = new Thread(cthread);
 				t1.start();
-				//System.out.println(" starts " + t1.getName() + ".");
-				
-				//TimeUnit.MILLISECONDS.sleep(500);
-				 
 				t1.join();
 			} catch (InterruptedException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
-			
-
-			
-//			try {
-//				t1.join(); // wait until thread is done
-//			} catch (InterruptedException e) {
-//				Logging.log(e.toString());
-//				e.printStackTrace();
-//			}
-			
-			// Return results from crawl
-	//		System.out.println(counter++);
-	//		System.out.println(CrawlThread.geturl());
-	//		System.out.println(CrawlThread.getLinksOnPage());
-			
 		}
-//		System.out.println( "CrawlThread.getSinglePageData()" );
-//		System.out.println( CrawlThread.getSinglePageData() );
 		return new CrawlReturnData(CrawlThread.geturl(),CrawlThread.getLinksOnPage(), CrawlThread.getSinglePageData(), CrawlThread.getSinglePageLinksData(), CrawlThread.getSinglePageCssData(), CrawlThread.getSinglePageImageData());
 	}
 
@@ -288,9 +163,7 @@ public class InputControl {
 	}
 	
 	// clean urls check if not already in collection, if not - add them
-	public static void setPagesthatneedtobevisitedClean(ArrayList<String> pages) {	
-		//System.out.println(InputControl.pagesthatneedtobevisited);
-		//String page = page.getlinksOnPage();
+	public static void setPagesthatneedtobevisitedClean(ArrayList<String> pages) {
 		if (pages.size() > 0) {
 			for(String page : pages) {
 				//System.out.println(page);
@@ -299,7 +172,6 @@ public class InputControl {
 				}
 			}
 		}
-		//System.out.println(InputControl.pagesthatneedtobevisited);
 	}
 
 	public static String getBaseDomain() {
@@ -333,40 +205,6 @@ public class InputControl {
 	public static void setcrawlDepth(int crawlDepth) {
 		InputControl.crawlDepth = crawlDepth;
 	}
-	
-	
-//	public void getPageLinks(String url) {
-//		
-//		int connStatus = 404;
-//		Document htmlDocumentGET = null;
-//        Connection connection = null;
-//		
-//        try
-//        {  
-//            connection = Jsoup.connect(url).ignoreContentType(true).userAgent(USER_AGENT).timeout(20000);
-//            htmlDocumentGET = connection.get();
-//            connStatus = connection.response().statusCode();  
-//            
-//         }
-//        catch(IOException e)
-//        {
-//        	System.out.println("IOException: " + e.toString());
-//        }
-//        
-//        this.setHtmlDocument(htmlDocumentGET);
-//        
-//        System.out.println(counter++);
-//        System.out.println(htmlDocumentGET.getElementsByTag("title"));
-//        System.out.println("*" + htmlDocumentGET.select("a[href]") + "*");
-//	}
-//
-//	public Document getHtmlDocument() {
-//		return htmlDocument;
-//	}
-//
-//	public void setHtmlDocument(Document htmlDocument) {
-//		this.htmlDocument = htmlDocument;
-//	}
 
 }
 

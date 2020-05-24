@@ -18,23 +18,13 @@ import org.jsoup.select.Elements;
 public class CrawlThread implements Runnable {
 	
 	private static final String USER_AGENT = "Mozilla/5.0 (Windows NT 6.1; Win64; x64; rv:25.0) Gecko/20100101 Firefox/25.0";
-	
 	private static String baseDomain;
-	
-//	static ArrayList<Element> linksOnPageScanned = new ArrayList<Element>();
-	
 	static ArrayList<String> newLinksOnPageScanned = new ArrayList<String>();
-	
 	static HashMap<String,String> singlePageData = new HashMap<>();
 	static HashMap<String,List<String>> singlePageLinksData = new HashMap<>();
 	static HashMap<String,List<String>> singlePageCssData = new HashMap<>();
-	
 	static ArrayList<String> singlePageImageData;
-	
 	static HashMap<String,String> outBoundLinks = new HashMap<>();
-	
-
-	//	private static PageScan pagescan;
 	private static String url;
 	private static String startUrl;
 	
@@ -48,33 +38,15 @@ public class CrawlThread implements Runnable {
 
 	@Override
 	public void run() {
-//      Thread ct = Thread.currentThread();
-//		System.out.println(ct.getName() + " started.");
-		
-//		try {
-			
-			//Thread.sleep(3000);
-//		System.out.println("CrawlThread.startUrl ##############");
-//		System.out.println(CrawlThread.startUrl);
 		scanSite();
-			
-			
-//		} catch (InterruptedException e) {
-//			break;
-//		}
-	
-//		System.out.println(ct.getName() + " finished.");
 	}
 	
 	public void scanSite() {
-//		System.out.println("Crawling site...");
-		
-//		System.out.println("CrawlThread.startUrl ##############");
-//		System.out.println(CrawlThread.startUrl);
+
 		String[] schemes = {"http","https"}; // DEFAULT schemes = "http", "https", "ftp"
 		UrlValidator urlValidator = new UrlValidator(schemes);
 		if (urlValidator.isValid(CrawlThread.startUrl)) {
-//		   System.out.println("URL is valid");
+			//		   System.out.println("URL is valid");
 		} else {
 		  return;
 		}
@@ -89,18 +61,12 @@ public class CrawlThread implements Runnable {
             htmlDocumentGET = connection.get();
             connStatus = connection.response().statusCode();  
         } catch(IOException e) {
-//        	Logging.log(e.printStackTrace().toString());
         	System.out.println("Error: 404. URL: " + CrawlThread.startUrl);
         	return;
         }
 		
-//		System.out.println("Response: ");
-//		System.out.println(connection.response().header("Content-Type"));
-		
 		// PageScan is the structure for outputting data to file, csv, etc.
 		String header = connection.response().header("Content-Type");
-		
-//		System.out.println(connection.response().headers());
 		
 		// return Links on the page 
 		Elements linksOnPage = htmlDocumentGET.select("a[href]");
@@ -130,10 +96,8 @@ public class CrawlThread implements Runnable {
 			  pageCss.add(css.attr("href").toString());
 		  }
 		onePageCssData.put("css",pageCss );
-		  
-//		  System.out.println(onePageCssData);
+
 		// add links
-		// todo - filter out other domains, non-html pages, non-correct urls HERE!!
 		HashMap<String,List<String>> onePageLinksData = new HashMap<>();
 		List<String> pageLinks = new ArrayList<String>();
 		
@@ -147,8 +111,7 @@ public class CrawlThread implements Runnable {
         }
 		 
 		onePageLinksData.put("links", pageLinks);
-	
-        
+
 		boolean showImgs = ConfigManager.getshowImages();
 		if (showImgs) {
 			ArrayList<String> pageImages = new ArrayList<String>();
@@ -160,20 +123,11 @@ public class CrawlThread implements Runnable {
 	        }
 	        CrawlThread.setSinglePageImageData(pageImages);
 		}
-		
-//		System.out.println(onePageLinksData);
-		
-//		System.out.println("out Bound Links");
-//		System.out.println(outBoundLinks);
-		
-//		System.out.println(CrawlThread.newLinksOnPageScanned);
 
 		CrawlThread.setSinglePageData(onePageData);
 		CrawlThread.setSinglePageCssData(onePageCssData);
 		CrawlThread.setSinglePageLinksData(onePageLinksData);
-		
-		
-		// may not need this below, just use the singlePageData Map
+
 		PageScan ps = new PageScan(CrawlThread.startUrl);
 		url = ps.getUrl();
 		
@@ -272,12 +226,7 @@ public class CrawlThread implements Runnable {
 		if (Pattern.matches("^.*(\\/misc|\\/sites|\\/all|\\/themes|\\/modules|\\/profiles|\\/css|\\/field|\\/node|\\/theme){3}.*$", absUrl)) {
 			return false;
 		}
-//		// get rid of /=
-//		if (Pattern.matches(".*\\/=.*", absUrl)) {
-//			return false;
-//		}
 
-		//if (Pattern.matches("^((?!"+domainName+").)*$", absUrl)) {
 		if (Pattern.matches("\b"+domainName+"\b", absUrl)) {			
 			outBoundLinks.put(absUrl, parentPageUrl);
 		}
@@ -289,37 +238,11 @@ public class CrawlThread implements Runnable {
 		
 		
 	}
-
-//	private boolean typeFilter(String startUrl2, String[] useFilter) {
-//        Connection connection = Jsoup.connect(CrawlThread.startUrl).ignoreContentType(true).userAgent(USER_AGENT).timeout(20000);
-//        System.out.println("Type Filter");
-//        System.out.println(connection.response().header("Content-Type"));
-//		
-//		return false;
-//
-//		
-//	}
-
-//	public static HashMap<String, String> getSinglePageData() {
-//		return singlePageData;
-//	}
-
-//	public static void setSinglePageData(String singlePageType, String singlePageData) {
-//		CrawlThread.singlePageData.put(singlePageType, singlePageData);
-//	}
 	
 	public static ArrayList<String> getLinksOnPage() {
 		return CrawlThread.newLinksOnPageScanned;
 	}
 
-//	public static PageScan getPagescan() {
-//		return pagescan;
-//	}
-//
-//	public static void setPagescan(PageScan pagescan) {
-//		CrawlThread.pagescan = pagescan;
-//	}
-//	
 	public static String geturl() {
 		return url;
 	}

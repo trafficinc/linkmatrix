@@ -34,25 +34,20 @@ public class ConfigManager {
 				    //System.out.println("Config File already exists.");
 				}
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logging.log(e.toString());
 			}
 			 
 			//Write Content
 			FileWriter writer;
 			try {
 				writer = new FileWriter(newConfigFile);
-//				writer.write("#db.password=password\n");
-//				writer.write("#db.url=localhost\n");
 				writer.write("ignore.ext=pdf,jpg,gif,png\n");
 				writer.write("ignore.image=false\n");
 				writer.close();
 				getConfigs(configFile);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				Logging.log(e.toString());
 			}
-			
 		}
 	}
 
@@ -65,30 +60,22 @@ public class ConfigManager {
             prop.load(input);
 
             // get the property value and print it out
-//            System.out.println(prop.getProperty("db.url"));
-//            System.out.println(prop.getProperty("db.user"));
-//            System.out.println(prop.getProperty("db.password"));
-            //System.out.println(prop.getProperty("ignore.ext"));
             ConfigManager.loadExt(prop.getProperty("ignore.ext"));
             ConfigManager.loadExtshowImg(prop.getProperty("ignore.image"));
-           // ConfigManager.loadExt(prop.getProperty("ignore.image"));
-            //System.out.println(getIgnorelist());
 
         } catch (IOException ex) {
-            ex.printStackTrace();
+			Logging.log(ex.toString());
         }
 	}
 	
 	private static void loadExtshowImg(String property) {
-		boolean showimg = Boolean.parseBoolean(property);
-	    setshowImages(showimg);
+		boolean showImg = Boolean.parseBoolean(property);
+	    setshowImages(showImg);
     }
 
 	private static void loadExt(String property) {
-		
         String[] values = property.split(",");
         setIgnorelist(new ArrayList<String>(Arrays.asList(values)));
-		
 	}
 
 	public static ArrayList<String> getIgnorelist() {

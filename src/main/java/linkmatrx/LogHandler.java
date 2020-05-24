@@ -11,12 +11,10 @@ public class LogHandler extends StreamHandler {
         super.publish(record);
     }
 
-
     @Override
     public void flush() {
         super.flush();
     }
-
 
     @Override
     public void close() throws SecurityException {

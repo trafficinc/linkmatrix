@@ -16,8 +16,6 @@ public class ToCsvW {
     private CSVWriter csvwriter;
     private List<String[]> csvline = new ArrayList<String[]>();
     
-   // private static final Logger LOGGER = Logger.getLogger(ToCsvW.class.getName());
-    
     ToCsvW(String csvname) 
     {
         this.setfilename(csvname);   
@@ -28,25 +26,16 @@ public class ToCsvW {
             this.csvwriter = new CSVWriter(new FileWriter("reports/"+getfilename()));
         } catch (IOException ex) {
         	Logging.log(ex.toString());
-           // System.out.println(ex);
         }
         //write first line of csv, header rows - labels
-        //
-        //String csvtext = "Link #,Status Code,URL,Links on Page,Title Tag,Title Tag Count,Meta Description,Meta Description Count,Meta Keywords,Meta Keywords Count,H1 Tag(s),H1 Tag Count,H2 Tag(s),H2 Tag Count,Robots,Canonical,Page Speed,Last Modified";
         this.csvline.add(new String[] {"Date","Server","CSS","Images","On Page Links","H2 Title","Page Title","Canonical","Links On Page","Meta Description","Meta Keyword Count","Url","Meta Robots","Meta Description Count","Meta Keywords","Page Title Count","H1","Connection","Content Type","Status"});
     }
     
     public void setArray(HashMap<String, String> getsinglePageData)
     {
-        //System.out.println("Data is HERE: " + data.isEmpty());
-        //replace linebreaks with *
-        //String repl = data.replaceAll("(\\r|\\n|\\r\\n)+", "\\*");
-        //String[] segs = repl.split("\\*");
-        //System.out.println(data);
         ArrayList<String> csvlineEach = new ArrayList<String>();
         
         for (Entry<String, String> page : getsinglePageData.entrySet()) {
-        	// page.getValue()
         	csvlineEach.add(page.getValue());
         }
         
@@ -57,9 +46,6 @@ public class ToCsvW {
         } catch (IndexOutOfBoundsException e) {
         	Logging.log("Error: CSV Line Caught Here");
         	Logging.log(e.toString());
-            //System.out.println("Error: CSV Line Caught Here\n");
-            //System.out.println(e.toString() + "\n");
-                    
         }
     }
     
@@ -70,7 +56,6 @@ public class ToCsvW {
             this.csvwriter.close();
         } catch (IOException ex) {
         	Logging.log(ex.toString());
-            //System.out.println(ex);
         }
         System.out.println("\nCSV File Created!");
     }
