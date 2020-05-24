@@ -1,4 +1,4 @@
-package linkmatrix;
+package linkmatrx;
 
 import java.util.Date;
 import java.util.logging.Formatter;

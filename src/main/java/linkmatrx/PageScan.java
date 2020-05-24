@@ -1,4 +1,4 @@
-package linkmatrix;
+package linkmatrx;
 
 public class PageScan {
 	

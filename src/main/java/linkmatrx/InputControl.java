@@ -1,11 +1,8 @@
-package linkmatrix;
+package linkmatrx;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 import java.util.Map.Entry;
 import java.util.concurrent.TimeUnit;
 
@@ -378,10 +375,11 @@ public class InputControl {
 final class CsvView {
 
 	public static void viewData(HashMap<String, String> getsinglePageData, List<String> css, List<String> links,  ArrayList<String> images) {
-		String[] imageStr = GetStringArray(images); 
+		String[] imageStr = GetStringArray(images);
 		ToCsvW csv = InputControl.getCsv();
 		getsinglePageData.put("css",css.toString());	
 		getsinglePageData.put("images",Arrays.toString(imageStr));
+		getsinglePageData.put("onPageLinks",links.toString());
 		csv.setArray(getsinglePageData);	
 	}
 	

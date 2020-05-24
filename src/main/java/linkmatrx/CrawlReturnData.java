@@ -1,4 +1,4 @@
-package linkmatrix;
+package linkmatrx;
 
 import java.util.ArrayList;
 import java.util.HashMap;

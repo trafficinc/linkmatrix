@@ -1,4 +1,4 @@
-package linkmatrix;
+package linkmatrx;
 
 import java.io.File;
 import java.io.FileInputStream;

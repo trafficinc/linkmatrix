@@ -1,4 +1,4 @@
-package linkmatrix;
+package linkmatrx;
 
 import java.io.FileWriter;
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class ToCsvW {
         //write first line of csv, header rows - labels
         //
         //String csvtext = "Link #,Status Code,URL,Links on Page,Title Tag,Title Tag Count,Meta Description,Meta Description Count,Meta Keywords,Meta Keywords Count,H1 Tag(s),H1 Tag Count,H2 Tag(s),H2 Tag Count,Robots,Canonical,Page Speed,Last Modified";
-        this.csvline.add(new String[] {"Date","Server","CSS","Images","H2 Title","Page Title","Canonical","Links On Page","Meta Description","Meta Keyword Count","Url","Meta Robots","Meta Description Count","Meta Keywords","Page Title Count","H1","Connection","Content Type","Status"});
+        this.csvline.add(new String[] {"Date","Server","CSS","Images","On Page Links","H2 Title","Page Title","Canonical","Links On Page","Meta Description","Meta Keyword Count","Url","Meta Robots","Meta Description Count","Meta Keywords","Page Title Count","H1","Connection","Content Type","Status"});
     }
     
     public void setArray(HashMap<String, String> getsinglePageData)
@@ -52,7 +52,7 @@ public class ToCsvW {
         
         try {
         //build string
-        this.csvline.add(new String[] {csvlineEach.get(0), csvlineEach.get(1),csvlineEach.get(2),csvlineEach.get(3),csvlineEach.get(4),csvlineEach.get(5),csvlineEach.get(6),csvlineEach.get(7),csvlineEach.get(8),csvlineEach.get(9),csvlineEach.get(10),csvlineEach.get(11),csvlineEach.get(12),csvlineEach.get(13),csvlineEach.get(14),csvlineEach.get(15),csvlineEach.get(16),csvlineEach.get(17),csvlineEach.get(18) });
+        this.csvline.add(new String[] {csvlineEach.get(0), csvlineEach.get(1),csvlineEach.get(2),csvlineEach.get(3),csvlineEach.get(4),csvlineEach.get(5),csvlineEach.get(6),csvlineEach.get(7),csvlineEach.get(8),csvlineEach.get(9),csvlineEach.get(10),csvlineEach.get(11),csvlineEach.get(12),csvlineEach.get(13),csvlineEach.get(14),csvlineEach.get(15),csvlineEach.get(16),csvlineEach.get(17),csvlineEach.get(18),csvlineEach.get(19) });
         
         } catch (IndexOutOfBoundsException e) {
         	Logging.log("Error: CSV Line Caught Here");

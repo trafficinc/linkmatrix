@@ -1,4 +1,4 @@
-package linkmatrix;
+package linkmatrx;
 
 import java.util.logging.LogRecord;
 import java.util.logging.StreamHandler;

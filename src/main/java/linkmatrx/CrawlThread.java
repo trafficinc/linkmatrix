@@ -1,10 +1,12 @@
-package linkmatrix;
+package linkmatrx;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import org.apache.commons.validator.routines.UrlValidator;
 import org.jsoup.Connection;
@@ -165,7 +167,7 @@ public class CrawlThread implements Runnable {
 //		System.out.println(outBoundLinks);
 		
 //		System.out.println(CrawlThread.newLinksOnPageScanned);
-		
+
 		CrawlThread.setSinglePageData(onePageData);
 		CrawlThread.setSinglePageCssData(onePageCssData);
 		CrawlThread.setSinglePageLinksData(onePageLinksData);
@@ -235,9 +237,16 @@ public class CrawlThread implements Runnable {
         }
         return "";
     }
-	
+	// todo - test output order
 	private static void setSinglePageData(HashMap<String,String> onePageAppendedData) {
-		CrawlThread.singlePageData.putAll(onePageAppendedData);;
+		CrawlThread.singlePageData.putAll(onePageAppendedData);
+	}
+
+	// Testing only - todo
+	public static String convertWithStream(Map<String, ?> map) {
+		return map.keySet().stream()
+				.map(key -> key + "=" + map.get(key))
+				.collect(Collectors.joining(", ", "{", "}"));
 	}
 
 	private boolean preLinkFilter(String absUrl, UrlValidator urlValidator, String parentPageUrl) {

@@ -2,7 +2,11 @@ dist/
 bin/
 reports/
 target/
-.settings
+.settings/
 .classpath
 .project
+.idea/
 *.jar
+linkmatrx.iml
+config.properties
+notes/
