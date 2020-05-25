@@ -5,7 +5,7 @@ import java.util.logging.StreamHandler;
 
 public class LogHandler extends StreamHandler {
 
-	@Override
+    @Override
     public void publish(LogRecord record) {
         //
         super.publish(record);
@@ -20,5 +20,5 @@ public class LogHandler extends StreamHandler {
     public void close() throws SecurityException {
         super.close();
     }
-    
+
 }
