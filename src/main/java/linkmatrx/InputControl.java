@@ -28,7 +28,7 @@ public class InputControl {
         try {
             urlTest = new URL(startUrl);
         } catch (MalformedURLException e) {
-            e.printStackTrace();
+            Logging.log("URL: " + startUrl + "- Error: " + e.toString());
         }
         setBaseDomain(urlTest.getHost());
 
