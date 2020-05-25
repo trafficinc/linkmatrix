@@ -1,5 +1,7 @@
 package linkmatrx;
 
+import jdk.jfr.internal.Logger;
+
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
@@ -135,8 +137,7 @@ public class InputControl {
                 t1.start();
                 t1.join();
             } catch (InterruptedException e1) {
-                // TODO Auto-generated catch block
-                e1.printStackTrace();
+                Logging.log(e1.toString());
             }
         }
         return new CrawlReturnData(CrawlThread.geturl(), CrawlThread.getLinksOnPage(), CrawlThread.getSinglePageData(), CrawlThread.getSinglePageLinksData(), CrawlThread.getSinglePageCssData(), CrawlThread.getSinglePageImageData());
@@ -166,7 +167,6 @@ public class InputControl {
     public static void setPagesthatneedtobevisitedClean(ArrayList<String> pages) {
         if (pages.size() > 0) {
             for (String page : pages) {
-                //System.out.println(page);
                 if (!InputControl.pagesthatneedtobevisited.contains(page)) {
                     InputControl.setPagesthatneedtobevisited(page);
                 }
@@ -228,7 +228,6 @@ final class CsvView {
             str = new String[arr.size()];
             // ArrayList to Array Conversion
             for (int j = 0; j < arr.size(); j++) {
-                System.out.println(j);
                 str[j] = arr.get(j);
             }
         }
