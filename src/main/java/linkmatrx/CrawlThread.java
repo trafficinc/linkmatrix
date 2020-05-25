@@ -45,16 +45,14 @@ public class CrawlThread implements Runnable {
 
         String[] schemes = {"http", "https"}; // DEFAULT schemes = "http", "https", "ftp"
         UrlValidator urlValidator = new UrlValidator(schemes);
-        if (urlValidator.isValid(CrawlThread.startUrl)) {
-            //		   System.out.println("URL is valid");
-        } else {
+        if (!urlValidator.isValid(CrawlThread.startUrl)) {
             return;
         }
         // scan url and get data
         // add links to scan
-        int connStatus = 404;
-        Document htmlDocumentGET = null;
-        Connection connection = null;
+        int connStatus;
+        Document htmlDocumentGET;
+        Connection connection;
 
         try {
             connection = Jsoup.connect(CrawlThread.startUrl).ignoreContentType(true).userAgent(USER_AGENT).timeout(20000);
@@ -79,21 +77,21 @@ public class CrawlThread implements Runnable {
         onePageData.put("connection", connection.response().header("Connection"));
         onePageData.put("server", connection.response().header("Server"));
         onePageData.put("PageTitle", htmlDocumentGET.getElementsByTag("title").text());
-        onePageData.put("PageTitleChrCount", Integer.toString(htmlDocumentGET.getElementsByTag("title").text().length()).toString());
+        onePageData.put("PageTitleChrCount", Integer.toString(htmlDocumentGET.getElementsByTag("title").text().length()));
         onePageData.put("h1Title", htmlDocumentGET.getElementsByTag("h1").text());
         onePageData.put("h2Title", htmlDocumentGET.getElementsByTag("h2").text());
         onePageData.put("metaDescription", getMetaTag(htmlDocumentGET, "description"));
-        onePageData.put("metaDescriptionCount", Integer.toString(getMetaTag(htmlDocumentGET, "description").length()).toString());
+        onePageData.put("metaDescriptionCount", Integer.toString(getMetaTag(htmlDocumentGET, "description").length()));
         onePageData.put("metaKeywords", getMetaTag(htmlDocumentGET, "keywords"));
-        onePageData.put("metaKeywordsCount", Integer.toString(getMetaTag(htmlDocumentGET, "keywords").length()).toString());
+        onePageData.put("metaKeywordsCount", Integer.toString(getMetaTag(htmlDocumentGET, "keywords").length()));
         onePageData.put("metaRobots", getMetaTag(htmlDocumentGET, "robots"));
-        onePageData.put("rawLinksOnPageCount", Integer.toString(linksOnPage.size()).toString());
+        onePageData.put("rawLinksOnPageCount", Integer.toString(linksOnPage.size()));
         onePageData.put("canonical", getLinkRel(htmlDocumentGET, "canonical"));
 
         HashMap<String, List<String>> onePageCssData = new HashMap<>();
         List<String> pageCss = new ArrayList<String>();
         for (Element css : htmlDocumentGET.select("link[rel=stylesheet]")) {
-            pageCss.add(css.attr("href").toString());
+            pageCss.add(css.attr("href"));
         }
         onePageCssData.put("css", pageCss);
 
@@ -163,13 +161,13 @@ public class CrawlThread implements Runnable {
     }
 
     //get rel links
-    private static String getLinkRel(Document document, String attr) {
-        Elements elements = document.select("link[rel=" + attr + "]");
+    private static String getLinkRel(Document document, String attrSource) {
+        Elements elements = document.select("link[rel=" + attrSource + "]");
         for (Element element : elements) {
             final String s = element.attr("href");
             if (s != null) return s;
         }
-        elements = document.select("link[property=" + attr + "]");
+        elements = document.select("link[property=" + attrSource + "]");
         for (Element element : elements) {
             final String s = element.attr("href");
             if (s != null) return s;

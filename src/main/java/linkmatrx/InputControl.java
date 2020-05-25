@@ -1,7 +1,5 @@
 package linkmatrx;
 
-import jdk.jfr.internal.Logger;
-
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
@@ -19,9 +17,9 @@ public class InputControl {
     private static ToCsvW csv;
     private static int generateCSV = 0; // 0 = no, 1 = yes
 
-    public InputControl(String startUrl, int docsv, int crawlDepth) {
+    public InputControl(String startUrl, int doCsv, int crawlDepth) {
         InputControl.setcrawlDepth(crawlDepth);
-        InputControl.setGenerateCSV(docsv);
+        InputControl.setGenerateCSV(doCsv);
 
         // set original base url, for use in filter
         URL urlTest = null;
@@ -30,12 +28,14 @@ public class InputControl {
         } catch (MalformedURLException e) {
             Logging.log("URL: " + startUrl + "- Error: " + e.toString());
         }
-        setBaseDomain(urlTest.getHost());
+
+        String urlHost = (urlTest.getHost() == null) ? "" : urlTest.getHost();
+        setBaseDomain(urlHost);
 
         if (InputControl.getGenerateCSV() == 1) {
-            ToCsvW tocsv = new ToCsvW(InputControl.baseDomain);
-            tocsv.initcsv();
-            InputControl.setCsv(tocsv);
+            ToCsvW toCsv = new ToCsvW(InputControl.baseDomain);
+            toCsv.initcsv();
+            InputControl.setCsv(toCsv);
         }
 
         // Crawl Type
@@ -64,7 +64,7 @@ public class InputControl {
             System.out.println(".)");
             ConsoleView.viewData(page.getsinglePageData(), page.getSinglePageCssData().get("css"), page.getSinglePageLinksData().get("links"), page.getSinglePageImageData());
             System.out.println("_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _");
-            System.out.println("");
+            System.out.println();
 
             // Just do 1 url, uncomment below.
             //System.exit(0);
@@ -100,7 +100,7 @@ public class InputControl {
 
     private static boolean doFilters(String startUrl) {
         // filter by extension
-        String getExt = "";
+        String getExt;
         if (startUrl.length() > 3) {
             getExt = startUrl.substring(startUrl.length() - 3);
         } else {

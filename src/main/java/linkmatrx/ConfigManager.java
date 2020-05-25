@@ -30,8 +30,6 @@ public class ConfigManager {
             try {
                 if (newConfigFile.createNewFile()) {
                     System.out.println("Config File is created!");
-                } else {
-                    //System.out.println("Config File already exists.");
                 }
             } catch (IOException e) {
                 Logging.log(e.toString());
