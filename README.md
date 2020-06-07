@@ -3,6 +3,7 @@ Web Crawler tool for search engine optimization and website management
 
 ## Requirements:
 Java 8+ [tested]
+
 Maven 3.6+ [tested]
 
 ## Run it
