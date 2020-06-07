@@ -13,7 +13,7 @@ Maven 3.6+ [tested]
 
 3.) cd target
 
-4.) Run:> java -jar linkmatrx-1.0-jar-with-dependencies.jar -m url -u http://www.website.com -o console  -d 1
+4.) Run:> java -jar linkmatrx-1.0-jar-with-dependencies.jar -m url -u ht<span>tp://</span>website.com  -o console  -d 1
 
 
 ### Flags
@@ -27,5 +27,5 @@ Maven 3.6+ [tested]
 
 ### Output to a text file
 
-> java -jar linkmatrx-1.0-jar-with-dependencies.jar -m url -u http://www.website.com -o console  -d 1 > results.txt
+> java -jar linkmatrx-1.0-jar-with-dependencies.jar -m url -u ht<span>tp://</span>website.com -o console  -d 1 > results.txt
 
