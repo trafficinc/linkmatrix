@@ -2,9 +2,11 @@
 Web Crawler tool for search engine optimization and website management
 
 ## Requirements:
-Java 8+ [8 - tested]
+Java 8+ 
 
-Maven 3.6+ [3.6 - tested]
+Maven 3.6+ 
+
+Tested on Windows 10 , Java 8, Maven 3.6
 
 ## Run it
 1.) Download Zip file and un-Zip
