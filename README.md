@@ -1,4 +1,4 @@
-# linkmatrx
+# linkmatrx (Linkmatrix)
 Web Crawler tool for search engine optimization and website management
 
 ## Requirements:
