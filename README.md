@@ -1,9 +1,9 @@
-# linkmatrx (Linkmatrix)
+# linkmatrx
 Web Crawler tool for search engine optimization and website management
 
 ## Requirements:
-Java 8+
-Maven
+Java 8+ [tested]
+Maven 3.6+ [tested]
 
 ## Run it
 1.) Download Zip file and un-Zip
@@ -24,4 +24,7 @@ Maven
 
 -d = depth of scan
 
+### Output to a text file
+
+> java -jar linkmatrx-1.0-jar-with-dependencies.jar -m url -u http://www.website.com -o console  -d 1 > results.txt
 
